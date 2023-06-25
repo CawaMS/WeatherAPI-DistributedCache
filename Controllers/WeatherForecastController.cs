@@ -42,10 +42,10 @@ namespace WeatherAPI.Controllers
             }
         }
         [HttpGet(Name = "GetMoreWeatherForecast")]
-        [Route("{numWeeksFromNow}/{numMonthsFromNow}")]
-        public async IAsyncEnumerable<WeatherForecast> GetFuture(int numWeeksFromNow, int numMonthsFromNow, CancellationToken abort)
+        [Route("{numWeeks}/{numMonths}")]
+        public async IAsyncEnumerable<WeatherForecast> GetFuture(int numWeeks, int numMonths, CancellationToken abort)
         {
-            var WeatherForecastNextWeek = await _cache.GetAsync($"{numWeeksFromNow}:{numMonthsFromNow}-fromToday", (NumWeeks: numWeeksFromNow, NumMonths: numMonthsFromNow),
+            var WeatherForecastNextWeek = await _cache.GetAsync($"{numWeeks}:{numMonths}-fromToday", (NumWeeks: numWeeks, NumMonths: numMonths),
             static state =>
             {
                 return Enumerable.Range(1, 5).Select(index => new WeatherForecast
