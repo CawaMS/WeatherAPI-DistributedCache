@@ -86,7 +86,7 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
             }
             {
               name:'ConnectionStrings__MyRedisConStr'
-              value: 'your_cache_connectionstring'
+              value: '${redisCache.properties.hostName}:6380,password=${redisCache.listKeys().primaryKey},ssl=True,abortConnect=False'
             }
           ]
           resources: {
@@ -100,6 +100,21 @@ resource app 'Microsoft.App/containerApps@2023-04-01-preview' = {
         maxReplicas: 10
       }
     }
+  }
+}
+
+resource redisCache 'Microsoft.Cache/redis@2023-08-01' = {
+  location: location
+  name: '${name}-rediscache'
+  properties:{
+    sku:{
+      capacity:1
+      family:'C'
+      name:'Standard'
+    }
+    enableNonSslPort:false
+    redisVersion:'6'
+    publicNetworkAccess: 'Enabled'
   }
 }
 
