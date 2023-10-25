@@ -1,9 +1,10 @@
 # Weather Forecast Web API Demo Using the New Distributed Cache Extension Methods
 The new concept on a better .NET caching abtraction is presented by Marc Gravell's [Distributed Cache Demo](https://github.com/mgravell/DistributedCacheDemo/tree/main). This weather app is an example to show how to reuse the extension methods from Distributed Cache Demo code to cache weather forecast reports, with both stateless and stateful options. 
 
-## Pre-requisites for running the Weather API app
+## Run the application locally
 
-* [Download .NET 7 or later](https://dotnet.microsoft.com/download)
+Pre-requisites for running the Weather API app
+* .NET 8 or above. [Download](https://dotnet.microsoft.com/download/dotnet/8.0)
 * Sign-up for an Azure Subscription if you don't have one yet. [Start free](https://azure.microsoft.com/free/search/?ef_id=_k_e3d0541f9b0a11bc5dd030871a928aba_k_&OCID=AIDcmm5edswduu_SEM__k_e3d0541f9b0a11bc5dd030871a928aba_k_&msclkid=e3d0541f9b0a11bc5dd030871a928aba)
 * [Setup Git command line](https://git-scm.com/downloads)
 
@@ -54,3 +55,29 @@ The new concept on a better .NET caching abtraction is presented by Marc Gravell
 11. Use KEYS * and HGETALL <your_cached_value_key> commands to view the cached weather forecast.
 
     ![Weather forecast content from Redis console](./media/redis-console-weatherforecast.png)
+
+## Deploy to Azure
+The azd support deploys this web application to an Azure Container App instance.
+Prerequisites:
+- Azure subscription. [Start free](https://azure.microsoft.com/free)
+- .NET 8 or above. [Download](https://dotnet.microsoft.com/download/dotnet/8.0)
+- Docker. [Get docker](https://docs.docker.com/get-docker/)
+- Azure Developer CLI. [Install](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd?tabs=winget-windows%2Cbrew-mac%2Cscript-linux&pivots=os-windows)
+
+1. Open a command prompt
+2. Change directory to the project folder where azure.yaml file is located
+3. Run:
+    ```
+    azd up
+    ```
+4. Follow command prompt to enter environment name and select subscription
+5. This will create all the resources needed to run the sample:
+- Azure Container App instance and environment
+- Azure Container Registry
+- Azure Cache for Redis
+- Azure Key Vault
+
+6. To clean up the environment, run 
+    ```
+    azd down
+    ```
